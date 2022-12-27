@@ -20,8 +20,8 @@ export class BillingController {
   constructor(private readonly billingService: BillingService) {}
 
   @Post()
-  create(@Body() body: any) {
-    return this.billingService.create(body);
+  create(@Body() body: any, @Request() request: any) {
+    return this.billingService.create(body, request.user.id);
   }
 
   @Get()

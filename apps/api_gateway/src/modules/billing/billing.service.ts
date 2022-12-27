@@ -18,7 +18,7 @@ export class BillingService {
     @Inject(PERSISTENCE_SERVICE) private persistenceService: ClientProxy,
   ) {}
 
-  async create(billData: any) {
+  async create(billData: any, receiver: any) {
     // check if the paying individual has enough
 
     const userWallet: any = await Wallet.findOne({
@@ -37,6 +37,7 @@ export class BillingService {
         user_Id: billData.user_Id,
         amount: billData.amount,
         merchant_Id: billData.merchant_Id,
+        receiver,
       };
       try {
         this.persistenceService.emit('confirmed_bill', message);
