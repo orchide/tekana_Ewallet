@@ -7,18 +7,33 @@ import sequelize from 'sequelize';
 
 @Injectable()
 export class PersistenceServiceService {
+  async persistRejectedBill(bill: any) {
+    await Bill.create({
+      user_Id: bill.user_Id,
+      status: Bill_Status.REJECTED,
+      amount: bill.amount,
+      receiver: bill.receiver,
+    });
+  }
   async persistTransaction(bill: any) {
     await Bill.create({
       user_Id: bill.user_Id,
       status: Bill_Status.PAID,
       amount: bill.amount,
-      merchant_Id: bill.merchant_Id,
+      receiver: bill.receiver,
     });
 
     await Wallet.decrement('balance', {
       by: bill.amount,
       where: {
         userId: bill.user_Id,
+      },
+    });
+
+    await Wallet.increment('balance', {
+      by: bill.amount,
+      where: {
+        userId: bill.receiver,
       },
     });
   }

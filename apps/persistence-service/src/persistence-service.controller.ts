@@ -23,4 +23,12 @@ export class PersistenceServiceController {
 
     return await this.persistenceServiceService.persistTransaction(bill);
   }
+  @EventPattern('failed_bill')
+  async handleRejectedBill(@Payload() bill: any, @Ctx() context: RmqContext) {
+    this.rmqService.acknowledge(context);
+
+    const billData = JSON.stringify(bill);
+
+    return await this.persistenceServiceService.persistRejectedBill(bill);
+  }
 }

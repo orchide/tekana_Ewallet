@@ -67,8 +67,6 @@ export class AuthService {
   }
 
   public async me(request) {
-    console.log(request);
-
     return { user: request.user.dataValues };
   }
 }

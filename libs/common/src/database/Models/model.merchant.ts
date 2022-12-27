@@ -41,8 +41,6 @@ export class Merchant extends Model<Merchant> {
   })
   userId: number;
 
-  @HasMany(() => Bill)
-  bill: Bill[];
   @HasMany(() => Transaction)
   transactions: Transaction[];
 

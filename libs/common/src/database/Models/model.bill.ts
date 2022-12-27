@@ -28,13 +28,6 @@ export class Bill extends Model<Bill> {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  @ForeignKey(() => Merchant)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  merchant_Id: number;
-
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,

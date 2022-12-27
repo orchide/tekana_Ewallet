@@ -16,9 +16,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: any) {
     // check if user in the token actually exist
-    const user = await User.findOne(payload.email);
+    const user = await User.findOne({
+      where: {
+        email: payload.email,
+      },
+    });
 
-    console.log(user);
     if (!user) {
       throw new UnauthorizedException(
         'You are not authorized to perform the operation',
